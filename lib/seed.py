@@ -1,8 +1,7 @@
-# seeds/seeds.py
-
+from faker import Faker
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models.models import Restaurant, Customer, Review
+from models import Restaurant, Customer, Review
 
 # Replace 'sqlite:///database.sqlite' with the actual database URL
 DATABASE_URL = 'sqlite:///database.sqlite'
@@ -12,27 +11,31 @@ engine = create_engine(DATABASE_URL)
 Session = sessionmaker(bind=engine)
 session = Session()
 
+fake = Faker()
+
+# Generate a random number of customers, restaurants, and reviews
+num_customers = fake.random_int(min=5, max=15)
+num_restaurants = fake.random_int(min=5, max=15)
+num_reviews = fake.random_int(min=20, max=50)
+
 # Seed data for restaurants
-restaurant1 = Restaurant(name='Restaurant1', price=2)
-restaurant2 = Restaurant(name='Restaurant2', price=3)
+restaurants = [Restaurant(name=fake.company(), price=fake.random_int(min=1, max=5)) for _ in range(num_restaurants)]
 
 # Seed data for customers
-customer1 = Customer(first_name='John', last_name='Doe')
-customer2 = Customer(first_name='Jane', last_name='Doe')
+customers = [Customer(first_name=fake.first_name(), last_name=fake.last_name()) for _ in range(num_customers)]
 
 # Seed data for reviews
-review1 = Review(star_rating=4, comment='Great experience')
-review2 = Review(star_rating=5, comment='Excellent service')
-
-# Establish relationships
-review1.restaurant = restaurant1
-review1.customer = customer1
-
-review2.restaurant = restaurant2
-review2.customer = customer2
+reviews = [
+    Review(
+        star_rating=fake.random_int(min=1, max=5),
+        comment=fake.text(),
+        restaurant=fake.random_element(elements=restaurants),
+        customer=fake.random_element(elements=customers)
+    ) for _ in range(num_reviews)
+]
 
 # Add seed data to the session
-session.add_all([restaurant1, restaurant2, customer1, customer2, review1, review2])
+session.add_all(restaurants + customers + reviews)
 
 # Commit the changes
 session.commit()

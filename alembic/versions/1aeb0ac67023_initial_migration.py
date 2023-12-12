@@ -25,14 +25,6 @@
 # def downgrade() -> None:
 #     pass
 
-"""initial migration
-
-Revision ID: 1aeb0ac67023
-Revises: 
-Create Date: 2023-12-11 14:53:01.025432
-
-"""
-
 from typing import Sequence, Union
 
 from alembic import op
@@ -67,9 +59,9 @@ def upgrade() -> None:
     op.create_table(
         'reviews',
         sa.Column('id', sa.Integer(), nullable=False),
-        sa.Column('star_rating', sa.Integer(), nullable=True),
-        sa.Column('comment', sa.String(), nullable=True),
         sa.Column('restaurant_id', sa.Integer(), sa.ForeignKey('restaurants.id'), nullable=True),
+        sa.Column('star_rating', sa.Integer(), nullable=True),
+        sa.Column('comment', sa.Text(), nullable=True),
         sa.Column('customer_id', sa.Integer(), sa.ForeignKey('customers.id'), nullable=True),
         sa.PrimaryKeyConstraint('id'),
     )

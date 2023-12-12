@@ -2,7 +2,7 @@
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models.models import Restaurant, Customer, Review
+from models import Restaurant, Customer, Review
 
 # Replace 'sqlite:///database.sqlite' with the actual database URL
 DATABASE_URL = 'sqlite:///database.sqlite'
