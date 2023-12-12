@@ -10,9 +10,11 @@ engine = create_engine(DATABASE_URL)
 # Create a session
 Session = sessionmaker(bind=engine)
 session = Session()
-
 fake = Faker()
 
+print("..............SEEDING DATA...............")
+
+print("................... SEEDING IS SUCCESSFULL......")
 # Generate a random number of customers, restaurants, and reviews
 num_customers = fake.random_int(min=5, max=15)
 num_restaurants = fake.random_int(min=5, max=15)
@@ -27,7 +29,7 @@ customers = [Customer(first_name=fake.first_name(), last_name=fake.last_name()) 
 # Seed data for reviews
 reviews = [
     Review(
-        star_rating=fake.random_int(min=1, max=5),
+        star_rating=fake.random_int(min=1, max=10),
         comment=fake.text(),
         restaurant=fake.random_element(elements=restaurants),
         customer=fake.random_element(elements=customers)
