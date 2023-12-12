@@ -23,7 +23,7 @@ This Python application is a restaurant review system designed for managing rest
 
     bash
 
-git clone https://github.com/yourusername/restaurant-review-system.git
+git clone https://github.com/Muthomi254/Restaurants-code-challange-with-sqlalchemy
 cd restaurant-review-system
 
  ## 2. Install dependencies:
